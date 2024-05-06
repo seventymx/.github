@@ -9,6 +9,60 @@
 -   **Nix Flakes:** Start by setting up a Nix Flake for each of your environments—Flutter, Vue.js, and React. This will ensure that all developers are working with the same tool versions and dependencies.
 -   **WSL2 and macOS:** Make sure your Nix setup is operational on both Ubuntu in WSL2 and macOS, using the same flake configurations to ensure consistency across platforms.
 
+#### WSL2 Setup
+
+```bash
+# Install WSL2
+wsl --install -d Ubuntu
+
+# Install Nix (single-user)
+sh <(curl -L https://nixos.org/nix/install) --no-daemon
+
+# Enable Nix flakes
+mkdir -p ~/.config/nix
+touch ~/.config/nix/nix.conf
+echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+
+# Create workspace
+mkdir /wsl_workspace
+chmod -R 777 /wsl_workspace
+cd /wsl_workspace
+
+# Switch git credentials to store
+git config --global credential.helper store
+
+# Copy .git-credentials from Windows user profile or set up with keys for GitHub and Azure DevOps
+cp ./.git-credentials ~/.git-credentials
+chmod 600 ~/.git-credentials
+
+# Set up Git config
+git config --global user.email "steffen@seventy.mx"
+git config --global user.name "Steffen70"
+
+# Clone repositories or create a new one (e.g., flutter_app)
+mkdir flutter_app
+cd flutter_app
+git init
+# Add origin
+
+# Restart WSL2
+wsl --shutdown
+wsl
+cd /wsl_workspace/flutter_app
+
+# Initialize Nix flakes
+nix flake init
+
+# Configure flake.nix
+
+# Commit and push
+git add *
+git branch -m main
+git commit -m "Initialized flake.nix"
+git push --set-upstream origin main
+git push
+```
+
 ### 2. **Docker Integration**
 
 -   **Microservices Build Images:** For each microservice, create Docker images that contain the Nix package manager to ensure the correct build tools and versions are used. These images will be used to build native compliant applications or additional Docker images for hosting.
