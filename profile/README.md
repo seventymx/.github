@@ -63,6 +63,33 @@ git push --set-upstream origin main
 git push
 ```
 
+#### macOS Setup
+
+-   **Nix Installation:** Install Nix on macOS (mac only supports multi-user installation).
+-   **Flake Configuration:** Set up the same flake configurations as in WSL2.
+
+Add the following to your `~/.bashrc` or `~/.zshrc`:
+
+```bash
+# Enable colors in Zsh
+autoload -U colors && colors
+
+# Add zsh prompt with colors
+PROMPT='%F{green}%n@%m%f:%F{blue}%~%f$ '
+
+# Add Visual Studio Code to PATH
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+# Add environment variable for Android ADB server address
+export ANDROID_ADB_SERVER_ADDRESS="172.20.2.158"
+echo "ANDROID_ADB_SERVER_ADDRESS set to $ANDROID_ADB_SERVER_ADDRESS"
+
+# Start Nix daemon
+. /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+```
+
+This will ensure that the Nix daemon is running and that the Visual Studio Code binary is in your path.
+
 ### 2. **Docker Integration**
 
 -   **Microservices Build Images:** For each microservice, create Docker images that contain the Nix package manager to ensure the correct build tools and versions are used. These images will be used to build native compliant applications or additional Docker images for hosting.
