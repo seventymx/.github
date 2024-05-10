@@ -24,8 +24,8 @@ touch ~/.config/nix/nix.conf
 echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 
 # Create workspace
-mkdir /wsl_workspace
-chmod -R 777 /wsl_workspace
+sudo mkdir /wsl_workspace
+sudo chmod -R 777 /wsl_workspace
 cd /wsl_workspace
 
 # Switch git credentials to store
