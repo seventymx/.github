@@ -15,6 +15,33 @@
 # Install WSL2
 wsl --install -d Ubuntu
 
+# Update and upgrade Ubuntu
+sudo apt update
+sudo apt upgrade -y
+
+# Upgrade to 23.04 (Jammy Jellyfish - LTS)
+sudo sed -i 's/jammy/lunar/g' /etc/apt/sources.list
+
+# Or upgrade to 23.10 (Manticore)
+sudo sed -i 's/jammy/mantic/g' /etc/apt/sources.list
+
+sudo apt update
+sudo apt dist-upgrade -y
+
+# Clean up
+sudo apt autoremove -y
+sudo apt clean
+
+# Restart WSL2
+wsl --shutdown
+
+# Open Ubuntu back up
+wt -p "Ubuntu"
+
+# Check versions - glibc should be 2.38 or higher (older versions cause issues with unstable.git)
+lsb_release -a
+ldd --version
+
 # Install Nix (single-user)
 sh <(curl -L https://nixos.org/nix/install) --no-daemon
 
@@ -23,10 +50,29 @@ mkdir -p ~/.config/nix
 touch ~/.config/nix/nix.conf
 echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
 
+# Enable unfree packages to install Jetbrains Rider globally
+mkdir -p ~/.config/nixpkgs
+
+# Add allowUnfree to config.nix
+cat <<EOF > ~/.config/nixpkgs/config.nix
+{
+  allowUnfree = true;
+}
+EOF
+
+# Reload shell
+
+# Install Rider globally
+nix-env -iA nixpkgs.jetbrains.rider
+
 # Create workspace
 sudo mkdir /wsl_workspace
 sudo chmod -R 777 /wsl_workspace
 cd /wsl_workspace
+
+# Set up Git config (you can also copy an existing .gitconfig to your home directory)
+git config --global user.email "steffen@seventy.mx"
+git config --global user.name "Steffen70"
 
 # Switch git credentials to store
 git config --global credential.helper store
@@ -34,10 +80,6 @@ git config --global credential.helper store
 # Copy .git-credentials from Windows user profile or set up with keys for GitHub and Azure DevOps
 cp ./.git-credentials ~/.git-credentials
 chmod 600 ~/.git-credentials
-
-# Set up Git config
-git config --global user.email "steffen@seventy.mx"
-git config --global user.name "Steffen70"
 
 # Clone repositories or create a new one (e.g., flutter_app)
 mkdir flutter_app
