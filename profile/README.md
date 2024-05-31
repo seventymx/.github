@@ -60,8 +60,6 @@ cat <<EOF > ~/.config/nixpkgs/config.nix
 }
 EOF
 
-# Reload shell
-
 # Install Rider globally
 nix-env -iA nixpkgs.jetbrains.rider
 
