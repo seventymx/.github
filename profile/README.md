@@ -103,6 +103,9 @@ git branch -m main
 git commit -m "Initialized flake.nix"
 git push --set-upstream origin main
 git push
+
+# Open backend in Rider and exit command, so it doesn't block the terminal
+rider $sln_file&>/dev/null &
 ```
 
 #### macOS Setup
