@@ -79,6 +79,14 @@ git config --global credential.helper store
 cp ./.git-credentials ~/.git-credentials
 chmod 600 ~/.git-credentials
 
+# Copy .gitconfig and .git-credentials to remote host (linx sftp tool required)
+sftp $user@$remote_host
+# sftp -P 2222 $user@localhost
+lcd ~
+put .git-credentials .git-credentials
+put .gitconfig .gitconfig
+exit
+
 # Clone repositories or create a new one (e.g., flutter_app)
 mkdir flutter_app
 cd flutter_app
