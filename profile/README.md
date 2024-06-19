@@ -2,6 +2,11 @@
   <img src="https://github.com/seventymx/.github/blob/main/profile/were-sending-you-back-to-the-future.gif">
 </p>
 
+<div align="center" style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://github.com/antonkomarev/github-profile-views-counter"><img src="https://komarev.com/ghpvc/?username=seventymx&style=for-the-badge&color=blue" alt=""></a>
+  <a href="https://github.com/seventymx/.github/blob/main/LICENSE"><img src="https://img.shields.io/github/license/seventymx/.github?style=for-the-badge&color=blue" alt=""></a>
+</div>
+
 ## TODO
 
 ### 1. **Environment Setup with Nix**
