@@ -145,6 +145,40 @@ echo "ANDROID_ADB_SERVER_ADDRESS set to $ANDROID_ADB_SERVER_ADDRESS"
 
 This will ensure that the Nix daemon is running and that the Visual Studio Code binary is in your path.
 
+#### Create a new Flutter project
+
+```bash
+# Copy the flake.nix of an existing project (needs to be a public repository)
+nix flake init --template github:seventymx/$repo_name
+
+# Copy from private repository (needs to be authenticated)
+cp ../spi_mobile/flake.nix .
+
+# Enter environment
+nix develop
+
+# Initialize Flutter project
+flutter create --platforms=android,ios .; rm -rf test
+
+# Git init and first commit
+git init; git add .; git commit -m "Created new empty Flutter project."
+
+# Add the fastlane repository (seventymx/fastlane_ios_automation) as a submodule to ./ios/fastlane
+git submodule add https://github.com/seventymx/fastlane_ios_automation.git ios/fastlane
+git submodule update --init --recursive
+
+# You also need to override some Flutter template files to ensure the correct signing and deployment configurations
+cp -r ../spi_mobile/android/app/build.gradle android/app/build.gradle
+git commit -am "Added fastlane submodule and updated build.gradle."
+
+# Don't forget the ../flutter_secrets repository in your workspace for secrets management
+
+# Copy additional nice-to-have files from your existing project
+# .gitignore, .prettierrc.json, README.md, etc.
+cp -r ../spi_mobile/.gitignore .; cp -r ../spi_mobile/.prettierrc.json .; cp -r ../spi_mobile/README.md .
+git add .; git commit -m "Added additional files from existing project."
+```
+
 ### 2. **Docker Integration**
 
 -   **Microservices Build Images:** For each microservice, create Docker images that contain the Nix package manager to ensure the correct build tools and versions are used. These images will be used to build native compliant applications or additional Docker images for hosting.
