@@ -3,7 +3,7 @@
 </p>
 
 <div align="center" style="display: flex; justify-content: center; align-items: center;">
-  <a href="https://github.com/seventymx/.github/blob/main/LICENSE"><img src="https://img.shields.io/github/license/seventymx/.github?style=for-the-badge&color=blue" alt=""></a>
+  <a href="https://github.com/seventymx/.github/blob/main/LICENSE"><img src="https://img.shields.io/github/license/seventymx/.github?style=for-the-badge&color=mediumpurple" alt=""></a>
 </div>
 
 ## TODO
