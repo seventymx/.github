@@ -13,6 +13,29 @@
 -   **Nix Flakes:** Start by setting up a Nix Flake for each of your environments—Flutter, Vue.js, and React. This will ensure that all developers are working with the same tool versions and dependencies.
 -   **WSL2 and macOS:** Make sure your Nix setup is operational on both Ubuntu in WSL2 and macOS, using the same flake configurations to ensure consistency across platforms.
 
+#### Nix Setup
+
+```bash
+# Install Nix (single-user)
+sh <(curl -L https://nixos.org/nix/install) --no-daemon
+
+# Enable Nix flakes
+mkdir -p ~/.config/nix
+touch ~/.config/nix/nix.conf
+echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
+
+# Add github credentials to nix for authenticated access
+# nano ~/.config/nix/nix.conf
+code ~/.config/nix/nix.conf
+
+# Add the following line to the nix.conf file
+access-tokens = github.com=$your_github_token
+
+# Now you can run nix commands like nix flake update, nix develop, nix build, etc. even if the referenced repository is private (unauthenticated access will also have a lower rate limit)
+```
+
+You can also add credentials for other Platforms [Nix Manual](https://nix.dev/manual/nix/2.23/command-ref/conf-file.html).
+
 #### WSL2 Setup
 
 ```bash
@@ -46,26 +69,7 @@ wt -p "Ubuntu"
 lsb_release -a
 ldd --version
 
-# Install Nix (single-user)
-sh <(curl -L https://nixos.org/nix/install) --no-daemon
-
-# Enable Nix flakes
-mkdir -p ~/.config/nix
-touch ~/.config/nix/nix.conf
-echo "experimental-features = nix-command flakes" >> ~/.config/nix/nix.conf
-
-# Enable unfree packages to install Jetbrains Rider globally
-mkdir -p ~/.config/nixpkgs
-
-# Add allowUnfree to config.nix
-cat <<EOF > ~/.config/nixpkgs/config.nix
-{
-  allowUnfree = true;
-}
-EOF
-
-# Install Rider globally
-nix-env -iA nixpkgs.jetbrains.rider
+# Install Nix (checkout section above)
 
 # Create workspace
 sudo mkdir /wsl_workspace
@@ -113,9 +117,6 @@ git branch -m main
 git commit -m "Initialized flake.nix"
 git push --set-upstream origin main
 git push
-
-# Open backend in Rider and exit command, so it doesn't block the terminal
-rider $sln_file&>/dev/null &
 ```
 
 #### macOS Setup
