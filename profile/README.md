@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/seventymx/.github/blob/main/profile/were-sending-you-back-to-the-future.gif">
+  <img src="https://github.com/seventymx/.github/blob/main/profile/rocky_balboa.gif">
 </p>
 
 We specialize in crafting modular, scalable software solutions tailored to meet the needs of modern businesses. With expertise in open-source and proprietary systems, we bridge innovation and reliability through microservices, containerization, and cutting-edge development practices.
